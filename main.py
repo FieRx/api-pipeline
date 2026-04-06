@@ -6,6 +6,7 @@ from config import API_TOKEN, API_BASE_URL
 import pandas as pd
 import os
 
+pd.set_option('display.max_columns', None)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -82,16 +83,16 @@ def transform_data(raw_data: dict) -> pd.DataFrame:
 
     # Convertir tipos
     df['order_date'] = pd.to_datetime(df['order_date'])
-    df['total'] = pd.to_numeric(df['total'], errors='coerce')
+    df['total_amount'] = pd.to_numeric(df['total_amount'], errors='coerce')
 
     # Agregar campos calculados
     df['order_month'] = df['order_date'].dt.to_period('M').astype(str)
     df['order_year'] = df['order_date'].dt.year
-    df['is_high_value'] = df['total'] > 100
+    df['is_high_value'] = df['total_amount'] > 100
     df['day_of_week'] = df['order_date'].dt.day_name()
 
     # Validaciones
-    invalid_totals = df['total'].isna().sum()
+    invalid_totals = df['total_amount'].isna().sum()
     if invalid_totals > 0:
         logger.warning(f"{invalid_totals} órdenes con total inválido")
 
@@ -128,7 +129,7 @@ def main():
 
     try:
         # Extract
-        raw_data = fetch_data_with_retry(rows=500)
+        raw_data = fetch_data_with_retry(rows=5000)
 
         # Transform
         df = transform_data(raw_data)
