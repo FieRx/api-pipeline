@@ -30,7 +30,10 @@ output/
 ```
 
 ## Docker
-Se añade Dockerfile que permite crear la imagen y correr el container usando Docker Desktop.
+Se añade Dockerfile que permite crear la imagen y correr el container usando Docker Desktop. 
+## Comandos Docker
+docker build -t api-pipeline .
+docker run -p <PORT> api-pipeline
 
 ## Autor
 Reinaldo Franco
