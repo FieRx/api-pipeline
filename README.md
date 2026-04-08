@@ -29,5 +29,8 @@ output/
 └── orders_all.parquet
 ```
 
+## Docker
+Se añade Dockerfile que permite crear la imagen y correr el container usando Docker Desktop.
+
 ## Autor
 Reinaldo Franco
